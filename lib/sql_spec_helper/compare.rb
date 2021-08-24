@@ -12,7 +12,7 @@ class SqlSpecHelper
       @expected = expected.to_a
       @daff_csv_show_index = daff_csv_show_index
 
-      Display.log('Query returned no rows', 'Results: Actual') if @actual.size == 0
+      Display.log('query returned no rows', 'Results: Actual') if @actual.size == 0
       Display.table(@expected, label: 'Results: Expected', tab: true, allow_preview: true)
       if show_daff_table && @actual.size > 0 && @expected != @actual
         # set `index: true` to collect ordering data (row/column mapping)
@@ -55,7 +55,7 @@ class SqlSpecHelper
                 if (actual_row = actual&.first)
                   expect(actual_row).to have_key(key), "missing column \"#{key}\""
                 else
-                  RSpec::Expectations.fail_with("the query returned no row")
+                  RSpec::Expectations.fail_with("query returned no rows")
                 end
               end
 
@@ -69,7 +69,7 @@ class SqlSpecHelper
                       RSpec::Expectations.fail_with("missing column \"#{key}\"")
                     end
                   else
-                    RSpec::Expectations.fail_with("the query returned no row")
+                    RSpec::Expectations.fail_with("query returned no rows")
                   end
                 end
               end
@@ -91,7 +91,7 @@ class SqlSpecHelper
             if (count = actual&.count)
               expect(count).to eq(expected.count), "expected #{expected.count} rows, got #{count} rows"
             else
-              RSpec::Expectations.fail_with("the query returned no row")
+              RSpec::Expectations.fail_with("query returned no rows")
             end
           end
 
@@ -101,7 +101,7 @@ class SqlSpecHelper
 
           it "should match the expected" do
             if actual.empty?
-              RSpec::Expectations.fail_with("the query returned no row")
+              RSpec::Expectations.fail_with("query returned no rows")
             else
               expect(actual).to eq_table expected
             end
