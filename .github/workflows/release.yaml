@@ -1,0 +1,26 @@
+name: Release
+on:
+  release:
+    types: [published]
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '3.0'
+        bundler-cache: true
+    - name: Build Gem
+      run: 'gem build sql_spec_helper.gemspec'
+    - name: Push Gem
+      shell: bash
+      run: |
+        mkdir -p ~/.gem
+        touch ~/.gem/credentials
+        chmod 600 ~/.gem/credentials
+        echo ":github: Bearer $GITHUB_TOKEN" >> ~/.gem/credentials
+        gem push --key github --host "https://rubygems.pkg.github.com/$OWNER" ./*.gem
+      env:
+        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        OWNER: codewars
