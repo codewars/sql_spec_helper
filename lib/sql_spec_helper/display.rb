@@ -21,6 +21,10 @@ class SqlSpecHelper
         print("STATUS", msg)
       end
 
+      def error(msg)
+        print("ERROR", msg)
+      end
+
       private
 
       def prop(name, value)

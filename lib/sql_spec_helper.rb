@@ -61,7 +61,7 @@ class SqlSpecHelper
     end
 
   rescue Sequel::DatabaseError => ex
-    Display.print("ERROR", ex.message.strip)
+    Display.error(ex.message.strip)
   end
 
   private
